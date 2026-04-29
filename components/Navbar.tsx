@@ -9,8 +9,8 @@ export function Navbar() {
     if (typeof window === "undefined") return "dark";
     return (localStorage.getItem("theme") as "dark" | "light") || "dark";
   });
-
   const router = useRouter();
+  const [hoverToggle, setHoverToggle] = useState(false);
 
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
@@ -76,21 +76,23 @@ export function Navbar() {
 
         <button
           onClick={toggle}
+          onMouseEnter={() => setHoverToggle(true)}
+          onMouseLeave={() => setHoverToggle(false)}
           style={{
             width: 36,
             height: 36,
-            borderRadius: 10,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--bg-secondary)",
-            border: "1px solid var(--border)",
-            color: "var(--text-secondary)",
+            color: hoverToggle ? "var(--accent)" : "var(--text-secondary)",
             cursor: "pointer",
+            transition: "color 0.2s ease",
+            background: "none",
+            border: "none",
           }}
           aria-label="Toggle theme"
         >
-          {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === "dark" ? <Sun size={24} /> : <Moon size={24} />}
         </button>
       </div>
     </nav>
